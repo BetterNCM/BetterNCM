@@ -38,7 +38,7 @@ void bncmMain() {
 					datapath = util::getEnvironment("BETTERNCM_PROFILE");
 				}
 				else {
-					datapath = "C:\\betterncm"; // 不再向前兼容
+					datapath = R"(C:\betterncm)"; // 不再向前兼容
 				}
 
 				if (process_type == Main) {
@@ -97,7 +97,7 @@ void bncmMain() {
 			const auto systemReason = std::string(e.what());
 
 			if(systemReason.find("Unicode") != std::string::npos) {
-				probableReason = "这很有可能是因为你修改了默认数据位置导致的，请在 BetterNCM Installer 内将其改回默认位置：C:\\betterncm\n\nThis is probably because you edited the default data location. Please change it back to the default location in BetterNCM Installer: C:\\betterncm";
+				probableReason = R"(这很有可能是因为你修改了默认数据位置导致的，请在 BetterNCM Installer 内将其改回默认位置：C:\betterncm\n\nThis is probably because you edited the default data location. Please change it back to the default location in BetterNCM Installer: C:\betterncm)";
 			}
 
 			if (systemReason.find("remove_all") != std::string::npos) {

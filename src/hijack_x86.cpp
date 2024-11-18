@@ -37,7 +37,7 @@ BOOL WINAPI Load()
 
 	GetSystemDirectory(tzPath, MAX_PATH);
 
-	lstrcat(tzPath, TEXT("\\msimg32.dll"));
+	lstrcat(tzPath, TEXT(R"(\msimg32.dll)"));
 
 	g_OldModule = LoadLibrary(tzPath);
 	if (g_OldModule == NULL)

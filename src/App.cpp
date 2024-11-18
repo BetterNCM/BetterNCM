@@ -30,7 +30,7 @@ std::string App::readConfig(const std::string& key, const std::string& def) {
 void App::writeConfig(const std::string& key, const std::string& value) {
 	std::lock_guard<std::mutex> lock(configMutex);
 	config[key] = value;
-	std::ofstream file(datapath + L"\\config.json");
+	std::ofstream file(datapath + LR"(\config.json)");
 	file << config;
 }
 
@@ -395,7 +395,7 @@ std::thread* App::create_server(const std::string& apiKey) {
 			auto cbData = static_cast<DWORD>(buffer.size() * sizeof(char));
 			auto result = RegGetValueW(
 				HKEY_CURRENT_USER,
-				L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+				LR"(Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
 				L"AppsUseLightTheme",
 				RRF_RT_REG_DWORD, // expected value type
 				nullptr,
@@ -453,9 +453,9 @@ std::thread* App::create_server(const std::string& apiKey) {
 
 void App::parseConfig() {
 	std::lock_guard<std::mutex> lock(configMutex);
-	if (fs::exists(datapath + L"\\config.json")) {
+	if (fs::exists(datapath + LR"(\config.json)")) {
 		try {
-			config = nlohmann::json::parse(read_to_string(datapath + L"\\config.json"));
+			config = nlohmann::json::parse(read_to_string(datapath + LR"(\config.json)"));
 		}
 		catch (std::exception e) {
 			std::wcout << L"[BetterNCM] 解析配置文件失败！将使用默认配置文件\n\n";
