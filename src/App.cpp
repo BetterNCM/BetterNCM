@@ -436,7 +436,7 @@ std::thread* App::create_server(const std::string& apiKey) {
 			res.set_content(path.utf8(), "text/plain");
 		});
 
-		// ¼ÓÔØ²å¼þ¹ÜÀíÆ÷µÄÑùÊ½ÎÄ¼þ
+		// åŠ è½½æ’ä»¶ç®¡ç†å™¨çš„æ ·å¼æ–‡ä»¶
 		svr->Get("/api/internal/framework.css", [&](const httplib::Request& req, httplib::Response& res) {
 			checkApiKey;
 			res.set_content(load_string_resource(L"framework.css"), "text/css");
@@ -458,7 +458,7 @@ void App::parseConfig() {
 			config = nlohmann::json::parse(read_to_string(datapath + L"\\config.json"));
 		}
 		catch (std::exception e) {
-			std::wcout << L"[BetterNCM] ½âÎöÅäÖÃÎÄ¼þÊ§°Ü£¡½«Ê¹ÓÃÄ¬ÈÏÅäÖÃÎÄ¼þ\n\n";
+			std::wcout << L"[BetterNCM] è§£æžé…ç½®æ–‡ä»¶å¤±è´¥ï¼å°†ä½¿ç”¨é»˜è®¤é…ç½®æ–‡ä»¶\n\n";
 		}
 	}
 }
