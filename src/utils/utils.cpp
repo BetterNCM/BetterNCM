@@ -307,12 +307,12 @@ semver::version util::getNCMExecutableVersion() {
 	DWORD verHandle = 0;
 	UINT size = 0;
 	LPBYTE lpBuffer = nullptr;
-	DWORD verSize = GetFileVersionInfoSize((getNCMPath() + L"\\cloudmusic.exe").c_str(), &verHandle);
+	DWORD verSize = GetFileVersionInfoSize((getNCMPath() + LR"(\cloudmusic.exe)").c_str(), &verHandle);
 
 	if (verSize != NULL) {
 		auto verData = new char[verSize];
 
-		if (GetFileVersionInfo((getNCMPath() + L"\\cloudmusic.exe").c_str(), verHandle, verSize, verData)) {
+		if (GetFileVersionInfo((getNCMPath() + LR"(\cloudmusic.exe)").c_str(), verHandle, verSize, verData)) {
 			if (VerQueryValue(verData, L"\\", (VOID FAR * FAR*) & lpBuffer, &size)) {
 				if (size) {
 					auto verInfo = (VS_FIXEDFILEINFO*)lpBuffer;

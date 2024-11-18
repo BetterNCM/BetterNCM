@@ -30,7 +30,7 @@ std::string App::readConfig(const std::string& key, const std::string& def) {
 void App::writeConfig(const std::string& key, const std::string& value) {
 	std::lock_guard<std::mutex> lock(configMutex);
 	config[key] = value;
-	std::ofstream file(datapath + L"\\config.json");
+	std::ofstream file(datapath + LR"(\config.json)");
 	file << config;
 }
 
@@ -395,7 +395,7 @@ std::thread* App::create_server(const std::string& apiKey) {
 			auto cbData = static_cast<DWORD>(buffer.size() * sizeof(char));
 			auto result = RegGetValueW(
 				HKEY_CURRENT_USER,
-				L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+				LR"(Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
 				L"AppsUseLightTheme",
 				RRF_RT_REG_DWORD, // expected value type
 				nullptr,
@@ -436,7 +436,7 @@ std::thread* App::create_server(const std::string& apiKey) {
 			res.set_content(path.utf8(), "text/plain");
 		});
 
-		// ¼ÓÔØ²å¼þ¹ÜÀíÆ÷µÄÑùÊ½ÎÄ¼þ
+		// åŠ è½½æ’ä»¶ç®¡ç†å™¨çš„æ ·å¼æ–‡ä»¶
 		svr->Get("/api/internal/framework.css", [&](const httplib::Request& req, httplib::Response& res) {
 			checkApiKey;
 			res.set_content(load_string_resource(L"framework.css"), "text/css");
@@ -453,12 +453,12 @@ std::thread* App::create_server(const std::string& apiKey) {
 
 void App::parseConfig() {
 	std::lock_guard<std::mutex> lock(configMutex);
-	if (fs::exists(datapath + L"\\config.json")) {
+	if (fs::exists(datapath + LR"(\config.json)")) {
 		try {
-			config = nlohmann::json::parse(read_to_string(datapath + L"\\config.json"));
+			config = nlohmann::json::parse(read_to_string(datapath + LR"(\config.json)"));
 		}
 		catch (std::exception e) {
-			std::wcout << L"[BetterNCM] ½âÎöÅäÖÃÎÄ¼þÊ§°Ü£¡½«Ê¹ÓÃÄ¬ÈÏÅäÖÃÎÄ¼þ\n\n";
+			std::wcout << L"[BetterNCM] è§£æžé…ç½®æ–‡ä»¶å¤±è´¥ï¼å°†ä½¿ç”¨é»˜è®¤é…ç½®æ–‡ä»¶\n\n";
 		}
 	}
 }
